@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Simple Music Player</title>
+<!-- Load FontAwesome icons -->
+<link rel="stylesheet"
+		href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+<!-- Load the custom CSS style file -->
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<div class="player">
+
+	<!-- Define the section for displaying details -->
+	<div class="details">
+	<div class="now-playing">PLAYING MAGIC SHOP OF BTS</div>
+	<div class="track-art"></div>
+	<div class="track-name">MAGIC SHOP</div>
+	<div class="track-artist">BTS</div>
+	</div>
+    <div id="playlist">
+        
+    </div>
+
+    
+    <div id="add-song">
+        <h2>Add a Song</h2>
+        <input type="text" id="song-title" placeholder="Song Title">
+        <input type="text" id="artist" placeholder="Artist">
+        <button id="add-button">Add Song</button>
+    </div>
+
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const playlist = document.getElementById("playlist");
+            const songTitleInput = document.getElementById("song-title");
+            const artistInput = document.getElementById("artist");
+            const addButton = document.getElementById("add-button");
+
+            addButton.addEventListener("click", function () {
+                const songTitle = songTitleInput.value;
+                const artist = artistInput.value;
+
+                if (songTitle && artist) {
+                   
+                    const song = {
+                        title: songTitle,
+                        artist: artist
+                    };
+
+                   
+                    playlistArray.push(song);
+
+                    
+                    songTitleInput.value = "";
+                    artistInput.value = "";
+
+                    
+                    updatePlaylistDisplay();
+                }
+            });
+
+            
+            const playlistArray = [];
+
+            
+            function updatePlaylistDisplay() {
+                playlist.innerHTML = "";
+
+                playlistArray.forEach(function (song, index) {
+                    const songItem = document.createElement("div");
+                    songItem.textContent = `${index + 1}. ${song.title} - ${song.artist}`;
+
+                    
+                    const removeButton = document.createElement("button");
+                    removeButton.textContent = "Remove";
+                    removeButton.addEventListener("click", function () {
+                        removeSong(index);
+                    });
+
+                    songItem.appendChild(removeButton);
+                    playlist.appendChild(songItem);
+                });
+            }
+
+            
+            function removeSong(index) {
+                playlistArray.splice(index, 1);
+                updatePlaylistDisplay();
+            }
+        });
+    </script>
+    <script src="script2.js"></script> 
+                      
+	<div class="buttons">
+	<div class="prev-track" onclick="prevTrack()">
+		<i class="fa fa-step-backward fa-2x"></i>
+	</div>
+	<div class="playpause-track" onclick="playpauseTrack()">
+		<i class="fa fa-play-circle fa-5x"></i>
+	</div>
+	<div class="next-track" onclick="nextTrack()">
+		<i class="fa fa-step-forward fa-2x"></i>
+	</div>
+	</div>
+
+	<!-- Define the section for displaying the seek slider-->
+	<div class="slider_container">
+	<div class="current-time">00:00</div>
+	<input type="range" min="1" max="100"
+		value="0" class="seek_slider" onchange="seekTo()">
+	<div class="total-duration">00:00</div>
+	</div>
+
+	<!-- Define the section for displaying the volume slider-->
+	<div class="slider_container">
+	<i class="fa fa-volume-down"></i>
+	<input type="range" min="1" max="100"
+		value="99" class="volume_slider" onchange="setVolume()">
+	<i class="fa fa-volume-up"></i>
+	</div>
+</div>
+
+<!-- Load the main script for the player -->
+<script src="main.js"></script>
+<div id="controls">
+    <button id="shuffle-button" >Shufflea</button>
+    <button id="repeat-button">Repeat</button>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const audioPlayer = document.getElementById("music-player");
+        const shuffleButton = document.getElementById("shuffle-button");
+        const repeatButton = document.getElementById("repeat-button");
+
+        let isShuffleOn = false;
+        let isRepeatOn = false;
+
+        shuffleButton.addEventListener("click", function () {
+            isShuffleOn = !isShuffleOn;
+            if (isShuffleOn) {
+                shuffleButton.style.backgroundColor = "green";
+            } else {
+                shuffleButton.style.backgroundColor = "gray";
+            }
+        });
+        repeatButton.addEventListener("click", function () {
+                isRepeatOn = !isRepeatOn;
+                if (isRepeatOn) {
+                    repeatButton.style.backgroundColor = "green";
+                    audioPlayer.loop = true;
+                } else {
+                    repeatButton.style.backgroundColor = "gray";
+                    audioPlayer.loop = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
